@@ -5,6 +5,7 @@
     "main": "src/index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "babel src/index.js -d dist",
         "prettier:fix": "prettier --write .",
         "prettier:check": "prettier --check ."
     },
@@ -21,6 +22,9 @@
         "sass"
     ],
     "devDependencies": {
+        "@babel/cli": "^7.19.3",
+        "@babel/core": "^7.20.5",
+        "@babel/preset-env": "^7.20.2",
         "cz-conventional-changelog": "^3.3.0",
         "eslint": "^8.28.0",
         "eslint-config-prettier": "^8.5.0",
