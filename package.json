@@ -1,0 +1,21 @@
+{
+  "name": "jest-scss-export-transform",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "keywords": [
+    "jest",
+    "transform",
+    "transformer",
+    "scss",
+    "sass"
+  ],
+  "devDependencies": {
+    "node-sass": "^8.0.0"
+  }
+}
