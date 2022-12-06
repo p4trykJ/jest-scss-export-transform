@@ -2,10 +2,11 @@
     "name": "jest-scss-export-transform",
     "version": "1.0.0",
     "description": "",
-    "main": "src/index.js",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "babel src/index.js -d dist",
+        "build": "tsc && babel src -d dist --extensions \".ts,.js\"",
         "prettier:fix": "prettier --write .",
         "prettier:check": "prettier --check ."
     },
@@ -24,12 +25,14 @@
     "devDependencies": {
         "@babel/cli": "^7.19.3",
         "@babel/core": "^7.20.5",
-        "@babel/preset-env": "^7.20.2",
+        "@babel/preset-typescript": "^7.18.6",
+        "@types/node": "^18.11.10",
         "cz-conventional-changelog": "^3.3.0",
         "eslint": "^8.28.0",
         "eslint-config-prettier": "^8.5.0",
         "node-sass": "^8.0.0",
-        "prettier": "^2.8.0"
+        "prettier": "^2.8.0",
+        "typescript": "^4.9.3"
     },
     "config": {
         "commitizen": {

@@ -1,26 +1,26 @@
-const sass = require('node-sass');
-const { pathToFileURL } = require('url');
-
-const scssToJson = (text) => {
-    return `{${text
-        .replace(/:export /g, '')
-        .replace(/({|})/g, '')
-        .replace(/(\S.*):/g, '"$1":')
-        .replace(/: (.*);/g, ': "$1",')}}`;
+var sass = require('node-sass');
+var pathToFileURL = require('url').pathToFileURL;
+var scssToJson = function (text) {
+    return '{'.concat(
+        text
+            .replace(/:export /g, '')
+            .replace(/({|})/g, '')
+            .replace(/(\S.*):/g, '"$1":')
+            .replace(/: (.*);/g, ': "$1",'),
+        '}'
+    );
 };
-
-const extractExports = (text) => {
+var extractExports = function (text: string) {
     if (!text) return;
     return (text.match(/:export([^}]+)}/g) || []).join('\n');
 };
-
 module.exports = {
-    process(sourceText, sourcePath, options) {
+    process: function (sourceText, sourcePath, options) {
         console.log(options.transformerConfig);
-        const result = sass.renderSync({
+        var result = sass.renderSync({
             file: sourcePath,
             importer: [
-                (url) => {
+                function (url) {
                     if (!url.startsWith('@style')) return null;
                     return {
                         file: new URL(
@@ -31,11 +31,11 @@ module.exports = {
                 },
             ],
         });
-        const response = result.css.toString()
+        var response = result.css.toString()
             ? scssToJson(extractExports(result.css.toString()))
             : JSON.stringify('');
         return {
-            code: `module.exports = ${response}`,
+            code: 'module.exports = '.concat(response),
         };
     },
 };
