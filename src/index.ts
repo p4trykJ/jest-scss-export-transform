@@ -1,20 +1,24 @@
 import sass from 'node-sass';
 import { pathToFileURL } from 'url';
-import { extractExports, scssToJson } from './helpers';
+import { extractExports, getResolvedAliasedPath, scssToJson } from './helpers';
+import type { Config } from './types';
 
 module.exports = {
-    process: function (sourceText, sourcePath, options) {
-        console.log(options.transformerConfig, 'di');
+    process: function (
+        sourceText: string,
+        sourcePath: string,
+        options: Config
+    ) {
+        const { alias } = options.transformerConfig;
         const result = sass.renderSync({
             file: sourcePath,
             importer: [
                 function (url) {
-                    if (!url.startsWith('@style')) return null;
+                    const matchedPath = getResolvedAliasedPath(url, alias);
+                    if (!matchedPath) return null;
+                    const { pathname } = pathToFileURL(matchedPath);
                     return {
-                        file: new URL(
-                            url.replace('@', ''),
-                            pathToFileURL('assets/style')
-                        ).pathname,
+                        file: pathname,
                     };
                 },
             ],
