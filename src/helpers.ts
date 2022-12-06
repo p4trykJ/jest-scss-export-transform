@@ -1,3 +1,5 @@
+import { Alias } from './types';
+
 const scssToJson = (text: string): string => {
     return '{'.concat(
         text
@@ -14,4 +16,18 @@ const extractExports = (text: string): string => {
     return (text.match(/:export([^}]+)}/g) || []).join('\n');
 };
 
-export { scssToJson, extractExports };
+const getResolvedAliasedPath = (
+    path: string,
+    aliases: Alias
+): string | null => {
+    const objectKeys = Object.keys(aliases);
+    for (let index = 0; index < objectKeys.length; index++) {
+        const alias = objectKeys[index];
+        if (new RegExp(`^${alias}`).test(path)) {
+            return path.replace(alias, aliases[alias]);
+        }
+    }
+    return null;
+};
+
+export { scssToJson, extractExports, getResolvedAliasedPath };
