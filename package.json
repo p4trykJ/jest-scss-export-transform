@@ -1,6 +1,6 @@
 {
     "name": "jest-scss-export-transform",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "description": "Jest plugin to resolve scss exports",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",

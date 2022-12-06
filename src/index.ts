@@ -24,7 +24,6 @@ module.exports = {
             ],
         });
         const result = prepareOutput(scssResult.css.toString());
-        console.log('result', result);
         return {
             code: `module.exports = ${result}`,
         };

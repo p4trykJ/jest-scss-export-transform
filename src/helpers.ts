@@ -5,7 +5,6 @@ const QUOTE_SIGN = "'";
 const prepareOutput = (text: string): string => {
     if (!text) return JSON.stringify('');
     const onlyExports = extractExports(text);
-    console.log('onlyExports', onlyExports);
     if (!onlyExports) return JSON.stringify('');
     const clearedText = clearText(onlyExports);
     const lines = splitLines(clearedText);
@@ -14,7 +13,6 @@ const prepareOutput = (text: string): string => {
 };
 
 const extractExports = (text: string): string => {
-    console.log('text', text);
     if (!text) return;
     return (text.match(/:export {[^}]+}/g) || []).join('\n');
 };
