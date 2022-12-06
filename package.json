@@ -1,9 +1,12 @@
 {
     "name": "jest-scss-export-transform",
-    "version": "1.0.0",
-    "description": "",
+    "version": "0.1.0",
+    "description": "Jest plugin to resolve scss exports",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
     "scripts": {
         "test": "jest",
         "build": "tsc && babel src -d dist --extensions \".ts,.js\"",
@@ -13,7 +16,15 @@
     "engines": {
         "pnpm": ">=3"
     },
-    "author": "",
+    "author": "p4trykJ",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/p4trykJ/jest-scss-export-transform"
+    },
+    "homepage": "https://github.com/p4trykJ/jest-scss-export-transform#readme",
+    "bugs": {
+        "url": "https://github.com/p4trykJ/jest-scss-export-transform/issues"
+    },
     "license": "MIT",
     "keywords": [
         "jest",
