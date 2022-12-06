@@ -1,23 +1,11 @@
-var sass = require('node-sass');
-var pathToFileURL = require('url').pathToFileURL;
-var scssToJson = function (text) {
-    return '{'.concat(
-        text
-            .replace(/:export /g, '')
-            .replace(/({|})/g, '')
-            .replace(/(\S.*):/g, '"$1":')
-            .replace(/: (.*);/g, ': "$1",'),
-        '}'
-    );
-};
-var extractExports = function (text: string) {
-    if (!text) return;
-    return (text.match(/:export([^}]+)}/g) || []).join('\n');
-};
+import sass from 'node-sass';
+import { pathToFileURL } from 'url';
+import { extractExports, scssToJson } from './helpers';
+
 module.exports = {
     process: function (sourceText, sourcePath, options) {
-        console.log(options.transformerConfig);
-        var result = sass.renderSync({
+        console.log(options.transformerConfig, 'di');
+        const result = sass.renderSync({
             file: sourcePath,
             importer: [
                 function (url) {
@@ -31,7 +19,7 @@ module.exports = {
                 },
             ],
         });
-        var response = result.css.toString()
+        const response = result.css.toString()
             ? scssToJson(extractExports(result.css.toString()))
             : JSON.stringify('');
         return {
