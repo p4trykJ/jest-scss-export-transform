@@ -13,7 +13,7 @@ const scssToJson = (text: string): string => {
 
 const extractExports = (text: string): string => {
     if (!text) return;
-    return (text.match(/:export([^}]+)}/g) || []).join('\n');
+    return (text.match(/:export {[^}]+}/g) || []).join('\n');
 };
 
 const getResolvedAliasedPath = (
