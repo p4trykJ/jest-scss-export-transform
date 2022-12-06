@@ -1,6 +1,6 @@
 import sass from 'node-sass';
 import { pathToFileURL } from 'url';
-import { extractExports, getResolvedAliasedPath, scssToJson } from './helpers';
+import { getResolvedAliasedPath, prepareOutput } from './helpers';
 import type { Config } from './types';
 
 module.exports = {
@@ -10,7 +10,7 @@ module.exports = {
         options: Config
     ) {
         const { alias } = options.transformerConfig;
-        const result = sass.renderSync({
+        const scssResult = sass.renderSync({
             file: sourcePath,
             importer: [
                 function (url) {
@@ -23,11 +23,10 @@ module.exports = {
                 },
             ],
         });
-        const response = result.css.toString()
-            ? scssToJson(extractExports(result.css.toString()))
-            : JSON.stringify('');
+        const result = prepareOutput(scssResult.css.toString());
+        console.log('result', result);
         return {
-            code: 'module.exports = '.concat(response),
+            code: `module.exports = ${result}`,
         };
     },
 };
