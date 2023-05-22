@@ -2,7 +2,7 @@
 
 Jest transformer for [.scss files](https://sass-lang.com/).
 
-Enables properly parsing of SCSS's :export statements in Jest tests.
+Allows the :export SCSS statement to be correctly parsed in the Jest tests.
 
 ## Install
 
