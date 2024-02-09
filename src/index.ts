@@ -1,6 +1,6 @@
-import sass from 'node-sass';
+import { compile } from 'sass';
 import { pathToFileURL } from 'url';
-import { getResolvedAliasedPath, prepareOutput } from './helpers';
+import { getResolvedAliasedPath, handleError, prepareOutput } from './helpers';
 import type { Config } from './types';
 
 module.exports = {
@@ -10,22 +10,31 @@ module.exports = {
         options: Config
     ) {
         const { alias } = options.transformerConfig;
-        const scssResult = sass.renderSync({
-            file: sourcePath,
-            importer: [
-                function (url) {
-                    const matchedPath = getResolvedAliasedPath(url, alias);
-                    if (!matchedPath) return null;
-                    const { pathname } = pathToFileURL(matchedPath);
-                    return {
-                        file: pathname,
-                    };
-                },
-            ],
-        });
-        const result = prepareOutput(scssResult.css.toString());
-        return {
-            code: `module.exports = ${result}`,
-        };
+        try {
+            const scssResult = compile(sourcePath, {
+                importers: [
+                    {
+                        findFileUrl(sourceUrl) {
+                            const matchedPath = getResolvedAliasedPath(
+                                sourceUrl,
+                                alias
+                            );
+                            if (!matchedPath) return null;
+                            const url = pathToFileURL(matchedPath);
+                            return url as URL;
+                        },
+                    },
+                ],
+            });
+            const result = prepareOutput(scssResult.css.toString());
+            return {
+                code: `module.exports = ${result}`,
+            };
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                handleError(error.message);
+            }
+            throw error;
+        }
     },
 };
