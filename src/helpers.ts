@@ -60,4 +60,4 @@ const getResolvedAliasedPath = (
     return null;
 };
 
-export { prepareOutput, getResolvedAliasedPath };
+export { extractExports, getResolvedAliasedPath, prepareOutput };
