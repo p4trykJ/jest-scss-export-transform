@@ -60,4 +60,19 @@ const getResolvedAliasedPath = (
     return null;
 };
 
-export { prepareOutput, getResolvedAliasedPath };
+const LCERROR = '\x1b[31m%s\x1b[0m'; //red
+const logger = {
+    error(message, ...optionalParams) {
+        console.error(LCERROR, message, ...optionalParams);
+    },
+};
+
+const handleError = (message) => {
+    if (/Can't find stylesheet to import/.test(message)) {
+        logger.error(
+            'Could not find the file. Check if alias property is configured properly: https://github.com/p4trykJ/jest-scss-export-transform?tab=readme-ov-file#add-to-your-jest-config'
+        );
+    }
+};
+
+export { extractExports, getResolvedAliasedPath, handleError, prepareOutput };
