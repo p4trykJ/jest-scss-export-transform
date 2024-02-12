@@ -6,6 +6,8 @@ Allows the :export SCSS statement to be correctly parsed in the Jest tests.
 
 ## Install
 
+### If your project uses node-sass use v1 and v2 if it uses sass.
+
 `npm i -D jest-scss-export-transform`
 
 or
